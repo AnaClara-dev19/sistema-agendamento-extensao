@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="pt-br">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -11,6 +12,7 @@
 
     <title>Keila Maria Unhas - Agendamento</title>
 </head>
+
 <body class="agendamento">
 
     <div class="pagina">
@@ -20,27 +22,59 @@
             <h1>oficial</h1>
         </div>
 
+
         <div class="card">
             <p class="rotulo">Nome do cliente:</p>
-            <input type="text" class="campo-nome" placeholder="Digite">
+            <input type="text" id="nomeCliente" class="campo-nome" placeholder="Digite o nome da cliente" required>
 
-            <p class="rotulo">Data e Hora:</p>
+
+
+            <p class="rotulo">Serviço:</p>
+            <select id="servico" class="campo-nome" required>
+                <option value="">Selecione um serviço</option>
+            </select>
+
+            <p class="rotulo">Modalidade:</p>
+            <select id="modalidade" class="campo-nome" required disabled>
+                <option value="">Selecione primeiro um serviço</option>
+            </select>
+
+            <p id="precoServico"></p>
+
+
+
+            <p class="rotulo">Data:</p>
             <div class="campo-data-hora">
-                <input type="text" class="campo-data" placeholder="dd/mm/aaaa">
-                <input type="text" class="campo-hora" placeholder="--:--">
+                <input type="date" id="data" class="campo-data" required>
             </div>
 
-            <img src="img/calendario-hora.png" alt="Calendário de outubro de 2026 e horários" class="calendario">
+            <p class="rotulo">Hora:</p>
+            <div class="campo-data-hora">
+                <input type="time" id="hora" class="campo-hora" required>
+            </div>
 
             <div class="botoes">
-                <a href="agendamento.html" class="botao botao-cancelar">Cancelar</a>
-                <a href="#" class="botao botao-salvar">Salvar</a>
+                <a href="agendamento.html" class="botao botao-cancelar">
+                    Cancelar
+                </a>
+
+                <button type="button" id="salvarAgendamento" class="botao botao-salvar">
+                    Salvar
+                </button>
             </div>
 
-            <a href="agendamento.html" class="botao botao-home">Home</a>
+            <a href="menu.html" class="botao botao-home">Home</a>
         </div>
+
 
     </div>
 
+
+
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <script src="app.js"></script>
+
+
 </body>
+
 </html>
