@@ -1,27 +1,395 @@
-html{
-   background-color: #FDEAC3; 
+* {
+  box-sizing: border-box;
 }
-.container{
-    max-width: 1100px;
-    margin: 80px auto;
-    padding: 50px;
 
-    background: white;
-    border-radius: 25px;
+body {
+  margin: 0;
+  min-height: 100vh;
+  background-color: #fdeac3;
+  font-family: 'Inter', sans-serif;
+  text-align: center;
 }
-.botao-basico{
-    background-color: #6c9fb3;
-    /* cor do botão */
-    color: white;
-    /* cor do texto */
-    border: none;
-    padding: 10px 20px;
-    border-radius: 8px;
-    /* cantos arredondados */
-    cursor: pointer;
-    font-size: 16px;
-    transition: 0.3s;
-    text-decoration: none;
-    margin-bottom: 60px;
-    margin-top: -50px;
+
+/* Coluna central com a largura da tela do protótipo (440px) */
+.pagina {
+  width: 100%;
+  max-width: 440px;
+  margin: 0 auto;
+  padding: 123px 25px 80px;
+}
+
+/* Título (304px de largura para quebrar em 3 linhas, como no Figma) */
+.titulo {
+  width: 304px;
+  max-width: 100%;
+  margin: 0 auto 57px;
+}
+
+.titulo h1 {
+  margin: 0;
+  font-family: 'Aboreto', serif;
+  font-weight: 400;
+  font-size: 32px;
+  color: #000;
+}
+
+/* Card claro */
+.card {
+  background-color: #fffff5;
+  border-radius: 30px;
+  min-height: 542px;
+  padding: 68px 45px 40px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.bem-vindo {
+  margin: 0 0 83px;
+  font-weight: 400;
+  font-size: 36px;
+  color: #8e4d0b;
+}
+
+.chave {
+  margin: 0 0 28px;
+  font-size: 16px;
+  color: #000;
+}
+
+/* Campo da chave de acesso */
+#chave {
+  width: 100%;
+  max-width: 299px;
+  height: 58px;
+  margin-bottom: 92px;
+  padding: 0 16px;
+  background-color: #ffe9b9;
+  border: 2px solid transparent;
+  border-radius: 20px;
+  font-family: 'Inter', sans-serif;
+  font-size: 16px;
+  color: #744311;
+  text-align: center;
+}
+
+#chave::placeholder {
+  font-size: 12px;
+  color: #868282;
+}
+
+#chave:focus {
+  outline: none;
+  border-color: #8e4d0b;
+}
+
+/* Botão Entrar */
+.botao {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  max-width: 299px;
+  height: 58px;
+  background-color: #fed57c;
+  border-radius: 20px;
+  color: #744311;
+  font-size: 24px;
+  text-decoration: none;
+}
+
+.botoes {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 7px;
+  width: 100%;
+}
+
+.botao:hover {
+  background-color: #fdc95a;
+}
+
+.botao-buscar {
+  text-align: right;
+  background-color: #fdc95a;
+  width: 220px;
+}
+
+.botao-horario {
+  background-color: #ffe9b9;
+  border-radius: 0px;
+  color: black;
+}
+
+.botao-home {
+  text-align: left;
+  background-color: #fdc95a;
+  width: 220px;
+}
+
+.Data {
+  align-self: flex-start;
+  margin: 0 0 20px;
+  font-size: 25px;
+  font-family: Arial, Helvetica, sans-serif;
+}
+
+.Data-buscar {
+  text-align: center;
+  font-size: 25px;
+  margin: 0 0 15px;
+  font-family: 'Inter', sans-serif;
+}
+
+
+/* =====================================================
+   Ajustes só da página de consulta
+   (valem só com <body class="consulta">, então não
+   mudam o login nem a home). Medidas do Figma.
+   ===================================================== */
+
+/* título e card começam mais acima que no login */
+.consulta .pagina {
+  padding-top: 96px;
+}
+
+.consulta .titulo {
+  margin-bottom: 36px;
+}
+
+.consulta .card {
+  min-height: 617px;
+  padding-top: 67px;
+}
+
+/* "Data:" alinhado a 13px da borda do campo */
+.consulta .Data {
+  margin: 0 0 13px 13px;
+}
+
+/* campo "Selecione a data" (reaproveita o #chave) */
+.consulta #chave {
+  margin-bottom: 34px;
+}
+
+.consulta #chave::placeholder {
+  font-size: 14px;
+}
+
+/* imagem do calendário */
+.consulta .calendario {
+  width: 214px;
+  height: 265px;
+  margin-bottom: 53px;
+}
+
+/* Home e Buscar lado a lado, um em cada ponta do card */
+.consulta .botoes {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  width: calc(100% + 58px);
+}
+
+.consulta .botoes .botao {
+  width: 144.66px;
+  height: 50px;
+  background-color: #fed57c;
+  font-size: 20px;
+}
+
+.consulta .botoes .botao:hover {
+  background-color: #fdc95a;
+}
+
+
+/* =====================================================
+   Ajustes só da página de agendamento
+   (valem só com <body class="agendamento">, então não
+   mudam as outras páginas). Medidas do Figma.
+   ===================================================== */
+
+/* título e card começam mais acima que no login */
+.agendamento .pagina {
+  padding-top: 96px;
+}
+
+.agendamento .titulo {
+  margin-bottom: 36px;
+}
+
+.agendamento .card {
+  min-height: 617px;
+  padding: 45px 34px 24px;
+}
+
+/* rótulos "Nome do cliente:" e "Data e Hora:" */
+.agendamento .rotulo {
+  align-self: flex-start;
+  margin: 0 0 25px 9px;
+  font-size: 20px;
+  line-height: normal;
+  color: #000;
+}
+
+/* o rótulo que vem depois do campo de nome fica mais perto do seu campo */
+.agendamento .campo-nome + .rotulo {
+  margin-bottom: 17px;
+}
+
+/* campo do nome */
+.agendamento .campo-nome {
+  align-self: flex-start;
+  width: 276.61px;
+  height: 39.45px;
+  margin-bottom: 25px;
+  padding: 0 16px;
+  background-color: #ffe9b9;
+  border: 2px solid transparent;
+  border-radius: 20px;
+  font-family: 'Inter', sans-serif;
+  font-size: 16px;
+  color: #744311;
+  text-align: center;
+}
+
+.agendamento .campo-nome::placeholder {
+  font-size: 14px;
+  color: #868282;
+}
+
+.agendamento .campo-nome:focus {
+  outline: none;
+  border-color: #8e4d0b;
+}
+
+/* caixa com data, hora e o ícone do calendário */
+.agendamento .campo-data-hora {
+  align-self: flex-start;
+  display: flex;
+  align-items: center;
+  width: 299px;
+  height: 58px;
+  margin-bottom: 15px;
+  padding-left: 12px;
+  background-color: #ffe9b9;
+  border-radius: 20px;
+}
+
+.agendamento .campo-data-hora:focus-within {
+  outline: 2px solid #8e4d0b;
+}
+
+.agendamento .campo-data-hora input {
+  padding: 0;
+  background: transparent;
+  border: none;
+  outline: none;
+  font-family: 'Inter', sans-serif;
+  font-size: 16px;
+  color: #744311;
+}
+
+.agendamento .campo-data-hora input::placeholder {
+  color: #744311;
+}
+
+.agendamento .campo-data {
+  width: 94px;
+}
+
+.agendamento .campo-hora {
+  width: 40px;
+  margin-left: 32px;
+}
+
+.agendamento .icone-calendario {
+  width: 41px;
+  height: 41px;
+  margin-left: auto;
+  margin-right: 42px;
+}
+
+/* imagem do calendário e dos horários */
+.agendamento .calendario {
+  width: 192px;
+  height: 156px;
+  margin-bottom: 40px;
+}
+
+/* Cancelar e Salvar lado a lado */
+.agendamento .botoes {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-self: flex-start;
+  width: 312.66px;
+  margin-bottom: 25px;
+}
+
+.agendamento .botao {
+  width: 144.66px;
+  height: 80px;
+  font-size: 20px;
+ 
+}
+
+.agendamento .botao:hover {
+  filter: brightness(0.95);
+}
+
+.agendamento .botao-cancelar {
+  background-color: #f2a575;
+}
+
+.agendamento .botao-salvar {
+  background-color: #f6dc45;
+}
+
+/* Home no meio, embaixo */
+.agendamento .botao-home {
+  background-color: #fed57c;
+}
+
+
+/* =====================================================
+   Ajustes só da página home
+   (valem só com <body class="home">, então não mudam
+   as outras páginas). Medidas do Figma (frame 440x956).
+   ===================================================== */
+
+/* título começa em y=96 e o card em y=243 (96 + 111 + 36) */
+.home .pagina {
+  padding-top: 96px;
+}
+
+.home .titulo {
+  margin-bottom: 36px;
+}
+
+/* card 390x617; o texto começa 75px abaixo do topo do card */
+.home .card {
+  min-height: 617px;
+  padding: 75px 45px 40px;
+}
+
+/* "Consultar Agendamentos": 299x97, 70px de espaço até o próximo botão */
+.home .botao-grande {
+  height: 97px;
+  margin-bottom: 70px;
+}
+
+/* "Novo Agendamento": 299x58 */
+.home .botao-pequeno {
+  height: 58px;
+}
+
+/* "O que vamos fazer hoje?" (24px, marrom) */
+.card .pergunta {
+  margin: 0 0 96px;
+  font-size: 24px;
+  color: #8e4d0b;
+  
 }
