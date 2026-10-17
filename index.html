@@ -1,6 +1,6 @@
-
 <!DOCTYPE html>
 <html lang="pt-BR">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -10,6 +10,7 @@
     <link rel="stylesheet" href="style.css">
     <title>Keila Maria Unhas - Login</title>
 </head>
+
 <body class="login">
 
     <div class="pagina">
@@ -22,18 +23,26 @@
         <div class="card">
             <h1 class="bem-vindo">Bem-Vindo!</h1>
 
-            <p class="chave">Digite a chave de acesso</p>
+            <p class="chave">Entre com seu e-mail e senha</p>
 
-            <input type="password" id="chave" name="chave" placeholder="chave de acesso">
+            <form id="formLogin">
+                <input type="email" id="email" name="email" placeholder="Seu e-mail" autocomplete="username" required>
 
-            <a href="menu.html" class="botao botao-pequeno">Entrar</a>
+                <input type="password" id="senha" name="senha" placeholder="Sua senha" autocomplete="current-password"
+                    required>
+
+                <button type="submit" class="botao botao-pequeno">
+                    Entrar
+                </button>
+            </form>
+
+            <p id="mensagemLogin"></p>
         </div>
 
-    </div>
 
-    
-    <!--Links para js e supabase-->
-    <script src="supabase.js"></script>
-    <script src="app.js"></script>
+        <!--Links para js e supabase-->
+        <script src="supabase.js"></script>
+        <script src="app.js"></script>
 </body>
+
 </html>

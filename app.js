@@ -118,8 +118,7 @@ function carregarModalidades() {
 
 // Procura uma cliente ou cadastra se ela ainda não existir
 async function buscarOuCriarCliente(nome) {
-    const nomeFormatado = nome.trim();
-
+    const nomeFormatado = nome.trim().replace(/\s+/g, " ");
     const { data: clientes, error: erroBusca } = await _supabase
         .from("Cliente")
         .select("Id_Cliente, Nome_Cliente")
@@ -128,6 +127,10 @@ async function buscarOuCriarCliente(nome) {
     if (erroBusca) {
         throw erroBusca;
     }
+
+    //temporario
+    console.log("Nome procurado:", nomeFormatado);
+    console.log("Clientes encontrados:", clientes);
 
     if (clientes.length > 0) {
         return clientes[0].Id_Cliente;
@@ -164,6 +167,32 @@ async function salvarAgendamento() {
     botao.textContent = "Salvando...";
 
     try {
+        const { data: { session } } = await _supabase.auth.getSession();
+
+        console.log(
+            "Sessão atual:",
+            session ? session.user.email : "SEM SESSÃO"
+        );
+
+        // Verifica se já existe um agendamento nesse dia e horário
+        const { data: horariosOcupados, error: erroBusca } = await _supabase
+            .from("Agendamento")
+            .select("Id_Agendamento")
+            .eq("Data", data)
+            .eq("Horario", hora);
+
+        if (erroBusca) {
+            throw erroBusca;
+        }
+
+        console.log("Data procurada:", data);
+        console.log("Horário procurado:", hora);
+        console.log("Agendamentos encontrados:", horariosOcupados);
+
+        if (horariosOcupados.length > 0) {
+            alert("Esse horário já está ocupado! Escolha outro, por favor.");
+            return;
+        }
         const idCliente = await buscarOuCriarCliente(nome);
 
         const { error } = await _supabase
@@ -178,13 +207,14 @@ async function salvarAgendamento() {
         if (error) {
             throw error;
         }
-
         alert("Agendamento salvo com sucesso! 💚");
 
         document.getElementById("nomeCliente").value = "";
         document.getElementById("data").value = "";
         document.getElementById("hora").value = "";
         document.getElementById("servico").value = "";
+        document.getElementById("modalidade").value = "";
+        document.getElementById("precoServico").textContent = "";
 
     } catch (erro) {
         console.error("Erro ao salvar agendamento:", erro);
@@ -202,24 +232,62 @@ async function salvarAgendamento() {
 
 
 
-// Inicializa a tela
 
-// Inicializa somente a tela de novo agendamento
+// Inicializa as telas
 document.addEventListener("DOMContentLoaded", async function () {
+
+    // LOGIN
+    const formLogin = document.getElementById("formLogin");
+
+    if (formLogin) {
+        formLogin.addEventListener("submit", async function (event) {
+            event.preventDefault();
+
+            const email = document.getElementById("email").value.trim();
+            const senha = document.getElementById("senha").value;
+            const mensagem = document.getElementById("mensagemLogin");
+            const botaoLogin = formLogin.querySelector('button[type="submit"]');
+
+            botaoLogin.disabled = true;
+            mensagem.textContent = "Verificando acesso...";
+
+            try {
+                const { error } = await _supabase.auth.signInWithPassword({
+                    email: email,
+                    password: senha
+                });
+
+                if (error) {
+                    throw error;
+                }
+
+                window.location.href = "menu.html";
+
+            } catch (erro) {
+                console.error("Erro no login:", erro);
+
+                mensagem.textContent =
+                    "Não foi possível entrar. Confira seu e-mail e sua senha.";
+
+            } finally {
+                botaoLogin.disabled = false;
+            }
+        });
+    }
+
+    // AGENDAMENTO
     const botao = document.getElementById("salvarAgendamento");
     const campoServico = document.getElementById("servico");
     const campoModalidade = document.getElementById("modalidade");
-    const campoPreco = document.getElementById("precoServico");
 
-    // Se não for a página de agendamento, não faz nada
-    if (!botao || !campoServico) {
+    // Se não for a página de agendamento, encerra apenas esta parte
+    if (!botao || !campoServico || !campoModalidade) {
         return;
     }
 
     console.log("Formulário de agendamento encontrado!");
 
     botao.addEventListener("click", salvarAgendamento);
-
     campoServico.addEventListener("change", carregarModalidades);
 
     campoModalidade.addEventListener("change", function () {
@@ -234,6 +302,7 @@ document.addEventListener("DOMContentLoaded", async function () {
             campoPreco.textContent = "";
         }
     });
+
     try {
         await testarConexao();
         await carregarServicos();
